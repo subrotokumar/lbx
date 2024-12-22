@@ -1,0 +1,6 @@
+entry_point: 3000
+servers:
+  - name: server1
+    url: http://localhost:3000
+  - name: server2
+    url: http://localhost:3000
