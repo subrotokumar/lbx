@@ -1,7 +1,6 @@
 package server
 
 import (
-	"log"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -9,6 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	log "github.com/sirupsen/logrus"
 	"github.com/subrotokumar/lbx/internal/config"
 )
 
@@ -60,7 +60,7 @@ func NewFromConfig(cfg config.Config) *ServerPool {
 			Alive:        true,
 			ReverseProxy: proxy,
 		})
-		log.Printf("Configured server: %s\n", serverUrl)
+		log.Debugf("Configured server: %s\n", serverUrl)
 	}
 	return serverPool
 }
@@ -76,6 +76,7 @@ func (s *ServerPool) NextIndex() int {
 func (s *ServerPool) GetNextPeer() *Backend {
 	next := s.NextIndex()
 	l := len(s.backends) + next
+
 	for i := next; i < l; i++ {
 		idx := i % len(s.backends)
 		if s.backends[idx].IsAlive() {
@@ -85,6 +86,7 @@ func (s *ServerPool) GetNextPeer() *Backend {
 			return s.backends[idx]
 		}
 	}
+
 	return nil
 }
 

@@ -1,6 +1,8 @@
 entry_point: 3000
 servers:
   - name: server1
-    url: http://localhost:3000
+    url: http://localhost:3001
   - name: server2
-    url: http://localhost:3000
+    url: http://localhost:3002
+  - name: server3
+    url: http://localhost:3003
