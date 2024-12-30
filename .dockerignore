@@ -1,5 +1,5 @@
 .vscode
-tmp
-config.yml
-docker-compose.yml
-Dockerfile
+tmp/
+*.Dockerfile
+.yml
+.yaml

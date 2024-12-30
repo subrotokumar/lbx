@@ -15,7 +15,7 @@ func Run() {
 
 	config, err := config.GetConfigFromPath("./config.yml")
 	if err != nil {
-		fmt.Printf("%s", err.Error())
+		log.Errorf("%s", err.Error())
 		os.Exit(0)
 	}
 

@@ -1,0 +1,40 @@
+services:
+  lbx:
+    build:
+      context: .
+      dockerfile: dev.dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/lbx
+    depends_on:
+      - server1
+      - server2
+      - server3
+    networks:
+      - mynet
+
+  server1: 
+    image: subrotokumar/httpserver
+    environment:
+      - SERVICE_NAME=server1
+    networks:
+      - mynet
+    
+  server2: 
+    image: subrotokumar/httpserver
+    environment:
+      - SERVICE_NAME=server2
+    networks:
+      - mynet
+
+  server3: 
+    image: subrotokumar/httpserver
+    environment:
+      - SERVICE_NAME=server3
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge

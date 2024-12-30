@@ -3,8 +3,9 @@ package config
 import (
 	"os"
 
+	"errors"
+
 	"gopkg.in/yaml.v2"
-	"sigs.k8s.io/kind/pkg/errors"
 )
 
 var ErrParsingYaml = errors.New("Error parsing YAML")
