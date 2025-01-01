@@ -42,7 +42,7 @@ func NewFromConfig(cfg config.Config) *ServerPool {
 				return
 			}
 
-			serverPool.MarkBackendStatus(serverUrl, false)
+			serverPool.markBackendStatus(serverUrl, false)
 
 			attempts := GetAttemptsFromContext(request)
 			log.Debugf("%s(%s) Attempting retry %d\n", request.RemoteAddr, request.URL.Path, attempts)
@@ -82,15 +82,6 @@ func (serverPool *ServerPool) GetNextPeer() *Backend {
 	}
 
 	return nil
-}
-
-func (serverPool *ServerPool) MarkBackendStatus(backendUrl *url.URL, alive bool) {
-	for _, b := range serverPool.backends {
-		if b.URL.String() == backendUrl.String() {
-			b.SetAlive(alive)
-			break
-		}
-	}
 }
 
 func (serverPool *ServerPool) lb(w http.ResponseWriter, r *http.Request) {

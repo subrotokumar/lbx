@@ -8,6 +8,16 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+func (serverPool *ServerPool) HealthCheckCron() {
+	t := time.NewTicker(time.Second * 20)
+	defer t.Stop()
+	for range t.C {
+		log.Debugf("Starting health check...")
+		serverPool.healthCheck()
+		log.Debugf("Health check completed")
+	}
+}
+
 func (serverPool *ServerPool) healthCheck() {
 	for _, b := range serverPool.backends {
 		status := "up"
@@ -20,16 +30,6 @@ func (serverPool *ServerPool) healthCheck() {
 	}
 }
 
-func (serverPool *ServerPool) HealthCheckCron() {
-	t := time.NewTicker(time.Second * 20)
-	defer t.Stop()
-	for range t.C {
-		log.Debugf("Starting health check...")
-		serverPool.healthCheck()
-		log.Debugf("Health check completed")
-	}
-}
-
 func isBackendAlive(u *url.URL) bool {
 	timeout := 2 * time.Second
 	conn, err := net.DialTimeout("tcp", u.Host, timeout)
@@ -39,4 +39,13 @@ func isBackendAlive(u *url.URL) bool {
 	}
 	_ = conn.Close()
 	return true
+}
+
+func (serverPool *ServerPool) markBackendStatus(backendUrl *url.URL, alive bool) {
+	for _, b := range serverPool.backends {
+		if b.URL.String() == backendUrl.String() {
+			b.SetAlive(alive)
+			break
+		}
+	}
 }

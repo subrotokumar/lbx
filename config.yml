@@ -1,8 +1,0 @@
-entry_point: 3000
-servers:
-  - name: server1
-    url: http://server1:3000
-  - name: server2
-    url: http://server2:3000
-  - name: server3
-    url: http://server3:3000

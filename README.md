@@ -1,5 +1,9 @@
-# LBX: Loadbalancer in GO
-### We Balance Loads, and Occasionally Your Sanity
+<center>
+<img src="./lbx.png" height="100px">  
+<h1>LBX: Loadbalancer in GO</h1>
+<h3> We Balance Loads, and Occasionally Your Sanity </h3>
+<br>
+</center>
 
 This project implements a simple load balancer in Go that distributes incoming requests across multiple backend servers using a **Round Robin** algorithm. The load balancer reads configuration from a YAML file and forwards requests to the backend servers in a rotating manner.
 
